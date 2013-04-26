@@ -23,6 +23,12 @@ class app_user_login_model extends CI_Model {
 				$sess_data['kode_user'] = $qad->kode_user;
 				$sess_data['username'] = $qad->username;
 				$sess_data['level'] = $qad->level;
+				
+				$_SESSION['ADMIN_RS_KCFINDER']=array();
+				$_SESSION['ADMIN_RS_KCFINDER']['disabled'] = false;
+				$_SESSION['ADMIN_RS_KCFINDER']['uploadURL'] = "../../content_upload";
+				$_SESSION['ADMIN_RS_KCFINDER']['uploadDir'] = "";
+				
 				$this->session->set_userdata($sess_data);
 			}
 			redirect("app_route");

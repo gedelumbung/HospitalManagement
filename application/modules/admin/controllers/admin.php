@@ -2,6 +2,12 @@
 
 class admin extends CI_Controller {
 
+	/**
+	 * @author : Gede Lumbung
+	 * @web : http://gedelumbung.com
+	 **/
+ 
+
 	function index()
 	{
 		if($this->session->userdata("logged_in")!="" && $this->session->userdata("level")=="admin")
@@ -13,7 +19,7 @@ class admin extends CI_Controller {
 		}
 		else
 		{
-			redirect("app_route");
+			redirect(base_url());
 		}
 	}
 }

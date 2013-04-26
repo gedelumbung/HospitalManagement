@@ -19,11 +19,21 @@
 						<li class="divider-vertical"></li>
 						<li><a href="<?php echo base_url(); ?>admin/sistem"><i class="icon-wrench"></i> System</a></li>
 						<li class="divider-vertical"></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-leaf"></i> Additional <i class=" icon-caret-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url(); ?>admin/data_spesialis"><i class="icon-filter"></i> Data Spesialis</a></li>
+								<li><a href="<?php echo base_url(); ?>admin/data_status"><i class="icon-eject"></i> Data Status</a></li>
+								<li><a href="<?php echo base_url(); ?>admin/data_kategori_ruang"><i class="icon-check"></i> Data Kategori Ruang</a></li>
+								<li class="divider"></li>
+								<li><a href="<?php echo base_url(); ?>admin/data_buku_tamu"><i class="icon-comment"></i> Data Buku Tamu</a></li>
+								<li><a href="<?php echo base_url(); ?>admin/data_contact"><i class="icon-envelope"></i> Data Contact Us</a></li>
+								<li><a href="<?php echo base_url(); ?>admin/data_galeri"><i class="icon-picture"></i> Data Galeri</a></li>
+							</ul>
+						</li>
 					</ul>
-					<form class="navbar-search pull-left" action="" _lpchecked="1">
-						<input type="text" class="search-query" placeholder="Search" style="width: 120px">
-					</form>
 					<ul class="nav pull-right">
+					<li class="divider-vertical"></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle usermenu" data-toggle="dropdown">
 								<i class="icon-user"></i> <?php echo $this->session->userdata("nama_user_login"); ?> <i class=" icon-caret-down"></i>
@@ -57,7 +67,7 @@
 					<a href="<?php echo base_url(); ?>app_route"><span class="icon-dashboard"></span>Dashboard</a>
 				</li>
 				<li class="lp-dropdown">
-					<a href="#" class="lp-dropdown-toggle" id="laporan"><span class="icon-file-alt"></span>Laporan</a>
+					<a href="#" class="lp-dropdown-toggle" id="laporan"><span class="icon-file-alt"></span>Data Laporan</a>
 					<ul class="lp-dropdown-menu simple" data-dropdown-owner="laporan">
 						<li>
 							<a href="<?php echo base_url(); ?>admin/laporan_fasilitas_ruang"><i class="icon-th"></i>&nbsp;&nbsp;Laporan Fasilitas Ruang</a>
@@ -74,7 +84,7 @@
 					</ul>
 				</li>
 				<li class="lp-dropdown">
-					<a href="#" class="lp-dropdown-toggle" id="jadwal"><span class="icon-th-large"></span>Jadwal</a>
+					<a href="#" class="lp-dropdown-toggle" id="jadwal"><span class="icon-th-large"></span>Data Jadwal</a>
 					<ul class="lp-dropdown-menu simple" data-dropdown-owner="jadwal">
 						<li>
 							<a href="<?php echo base_url(); ?>admin/jadwal_dokter"><i class="icon-hdd"></i>&nbsp;&nbsp;Data Jadwal Dokter</a>
@@ -95,10 +105,10 @@
 				</li>
 				
 				<li>
-					<a href="<?php echo base_url(); ?>admin/galeri"><span class="icon-inbox"></span>Galeri</a>
+					<a href="<?php echo base_url(); ?>admin/ruang"><span class="icon-inbox"></span>Data Ruang</a>
 				</li>
 				<li>
-					<a href="<?php echo base_url(); ?>admin/user"><span class="icon-cog"></span>User</a>
+					<a href="<?php echo base_url(); ?>admin/user"><span class="icon-cog"></span>Data User</a>
 				</li>
 			</ul>
 		</div>
