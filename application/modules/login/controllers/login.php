@@ -10,7 +10,7 @@ class login extends CI_Controller {
 		}
 		else
 		{
-			redirect("dashboard");
+			redirect("app_route");
 		}
 	}
 	
@@ -20,11 +20,21 @@ class login extends CI_Controller {
 		{
  			$dt['username'] = $_POST['username'];
  			$dt['password'] = $_POST['password'];
+ 			$dt['st'] = $_POST['st'];
 			$this->app_user_login_model->cekUserLogin($dt);
 		}
 		else
 		{
-			redirect("dashboard");
+			redirect("app_route");
+		}
+	}
+	
+	function logout()
+	{
+		if($this->session->userdata("logged_in")!="")
+		{
+ 			$this->session->sess_destroy();
+			redirect(base_url());
 		}
 	}
 }

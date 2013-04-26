@@ -42,7 +42,7 @@
 				</div> <!-- /password -->
 				
 				<div class="field" style="height:35px;">
-					<select data-placeholder="Level Access..." class="chzn-select" style="width:320px;" tabindex="2" name="status_pembayaran" id="status_pembayaran" required>
+					<select data-placeholder="Level Access..." class="chzn-select" style="width:320px;" tabindex="2" name="st" id="st" required>
           				<option value=""></option> 
 						<option value="admin">Admin</option>
 						<option value="direktur">Direktur</option>
