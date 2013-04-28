@@ -28,11 +28,11 @@
 				<?php
 					$a=''; $s='';
 					if($posisi=='atas'){$a='selected'; $s='';}
-					else if($posisi=='samping'){$a=''; $s='selected';}
+					else if($posisi=='bawah'){$a=''; $s='selected';}
 				?>
 				<select name="posisi">
 					<option value="atas" <?php echo $a; ?>>Atas</option>
-					<option value="samping" <?php echo $s; ?>>Samping</option>
+					<option value="bawah" <?php echo $s; ?>>Bawah</option>
 				</select>
 				<div class="cleaner_h10"></div>
 				
