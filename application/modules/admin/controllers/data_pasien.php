@@ -103,7 +103,8 @@ class data_pasien extends CI_Controller {
 			$id['id_pasien'] = $this->input->post("id_param");
 			if($tipe=="tambah")
 			{
-				$d['id_ruang'] = $this->input->post("id_ruang");
+				$split = explode("-", $this->input->post("id_ruang"));
+				$d['id_ruang'] = $split[0];
 				$d['id_dokter'] = $this->input->post("id_dokter");
 				$d['nama_pasien'] = $this->input->post("nama_pasien");
 				$d['tgl_lahir'] = $this->input->post("tgl_lahir");
@@ -114,13 +115,25 @@ class data_pasien extends CI_Controller {
 				$d['jenis_penyakit'] = $this->input->post("jenis_penyakit");
 				$d['tgl_masuk'] = $this->input->post("tgl_masuk");
 				$d['tgl_keluar'] = $this->input->post("tgl_keluar");
-				$d['biaya'] = $this->input->post("biaya");
+
+				$get_id_kat['id_kategori_ruang'] = $split[1];
+				$get = $this->db->get_where("dlmbg_kategori_ruang",$get_id_kat)->row();
+
+				$biaya_ruang = $get->biaya_ruang;
+
+				$masuk = new DateTime($d['tgl_masuk']);
+				$keluar = new DateTime($d['tgl_keluar']);
+				$jarak = $masuk->diff($keluar);
+				$lama = $jarak->format('%a')+1;
+
+				$d['biaya'] = $lama*$biaya_ruang;
 				
 				$this->db->insert("dlmbg_pasien",$d);
 			}
 			else if($tipe=="edit")
 			{
-				$d['id_ruang'] = $this->input->post("id_ruang");
+				$split = explode("-", $this->input->post("id_ruang"));
+				$d['id_ruang'] = $split[0];
 				$d['id_dokter'] = $this->input->post("id_dokter");
 				$d['nama_pasien'] = $this->input->post("nama_pasien");
 				$d['tgl_lahir'] = $this->input->post("tgl_lahir");
@@ -131,7 +144,18 @@ class data_pasien extends CI_Controller {
 				$d['jenis_penyakit'] = $this->input->post("jenis_penyakit");
 				$d['tgl_masuk'] = $this->input->post("tgl_masuk");
 				$d['tgl_keluar'] = $this->input->post("tgl_keluar");
-				$d['biaya'] = $this->input->post("biaya");
+
+				$get_id_kat['id_kategori_ruang'] = $split[1];
+				$get = $this->db->get_where("dlmbg_kategori_ruang",$get_id_kat)->row();
+
+				$biaya_ruang = $get->biaya_ruang;
+
+				$masuk = new DateTime($d['tgl_masuk']);
+				$keluar = new DateTime($d['tgl_keluar']);
+				$jarak = $masuk->diff($keluar);
+				$lama = $jarak->format('%a')+1;
+
+				$d['biaya'] = $lama*$biaya_ruang;
 				
 				$this->db->update("dlmbg_pasien",$d,$id);
 			}

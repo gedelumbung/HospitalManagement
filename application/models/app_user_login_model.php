@@ -24,6 +24,7 @@ class app_user_login_model extends CI_Model {
 				$sess_data['username'] = $qad->username;
 				$sess_data['level'] = $qad->level;
 				
+				session_start();
 				$_SESSION['ADMIN_RS_KCFINDER']=array();
 				$_SESSION['ADMIN_RS_KCFINDER']['disabled'] = false;
 				$_SESSION['ADMIN_RS_KCFINDER']['uploadURL'] = "../../content_upload";
