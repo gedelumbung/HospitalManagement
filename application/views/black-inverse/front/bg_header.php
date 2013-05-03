@@ -7,6 +7,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="css/images/favicon.ico" />
 	<link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/css/style.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/css/flexslider.css" type="text/css" media="all" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/css/jquery.fancybox-1.3.4.css" media="screen" />
 	
 	<script src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/js/jquery-1.8.0.min.js" type="text/javascript"></script>
 	<!--[if lt IE 9]>
@@ -14,6 +15,21 @@
 	<![endif]-->
 	<script src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/js/jquery.flexslider-min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/js/functions.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("a#boxshow").fancybox({
+						'titleShow'     : true,
+						'height'			: '100%',
+						'width'				: '100%',
+						'transitionIn'		: 'elastic',
+						'transitionOut'		: 'elastic',
+						'overlayColor'		: '#000',
+						'overlayOpacity'	: 0.9,
+		});
+	});
+
+	</script>
 </head>
 <body>
 	<!-- wraper -->

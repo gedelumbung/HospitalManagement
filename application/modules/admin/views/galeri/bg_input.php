@@ -3,7 +3,7 @@
 		<!-- Headings
 			================================================== -->
 		<section class="row-fluid">
-			<h1 class="box-header"><span class="icon-envelope"></span> Contact Us | <?php echo $GLOBALS['site_title']; ?></h1>
+			<h1 class="box-header"><span class="icon-picture"></span>  Galeri | <?php echo $GLOBALS['site_title']; ?></h1>
 			<div class="box">
 				<div class="well">
 					<?php echo form_open_multipart("admin/data_galeri/simpan"); ?>

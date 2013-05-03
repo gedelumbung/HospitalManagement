@@ -606,11 +606,11 @@ class app_global_admin_model extends CI_Model {
 				
 		foreach($w->result() as $h)
 		{
-			$st = 1;
+			$st = 0;
 			$st_text = "Unapprove";
-			if($h->st==1)
+			if($h->st==0)
 			{
-				$st = 0;
+				$st = 1;
 				$st_text = "Approve";
 			}
 			$hasil .= "<tr><td>".$i." </td><td>".$h->nama." </td><td>".$h->email." </td>
