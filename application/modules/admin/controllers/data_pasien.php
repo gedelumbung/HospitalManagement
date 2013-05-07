@@ -30,6 +30,7 @@ class data_pasien extends CI_Controller {
 		{
 			$d['id_ruang'] = "";
 			$d['id_dokter'] = "";
+			$d['id_tunjangan'] = "";
 			$d['nama_pasien'] = "";
 			$d['tgl_lahir'] = "";
 			$d['tempat_lahir'] = "";
@@ -39,10 +40,11 @@ class data_pasien extends CI_Controller {
 			$d['jenis_penyakit'] = "";
 			$d['tgl_masuk'] = "";
 			$d['tgl_keluar'] = "";
-			$d['biaya'] = "";
+			$d['biaya'] = "0";
 			
 			$d['dokter'] = $this->db->get("dlmbg_dokter");
 			$d['ruang'] = $this->db->get("dlmbg_ruang");
+			$d['tunjangan'] = $this->db->get("dlmbg_tunjangan");
 			
 			$d['id_param'] = "";
 			$d['tipe'] = "tambah";
@@ -67,6 +69,7 @@ class data_pasien extends CI_Controller {
 			
 			$d['id_ruang'] = $get->id_ruang;
 			$d['id_dokter'] = $get->id_dokter;
+			$d['id_tunjangan'] = $get->id_tunjangan;
 			$d['nama_pasien'] = $get->nama_pasien;
 			$d['tgl_lahir'] = $get->tgl_lahir;
 			$d['tempat_lahir'] = $get->tempat_lahir;
@@ -80,6 +83,7 @@ class data_pasien extends CI_Controller {
 			
 			$d['dokter'] = $this->db->get("dlmbg_dokter");
 			$d['ruang'] = $this->db->get("dlmbg_ruang");
+			$d['tunjangan'] = $this->db->get("dlmbg_tunjangan");
 			
 			$d['id_param'] = $get->id_pasien;
 			$d['tipe'] = "edit";
@@ -106,6 +110,7 @@ class data_pasien extends CI_Controller {
 				$split = explode("-", $this->input->post("id_ruang"));
 				$d['id_ruang'] = $split[0];
 				$d['id_dokter'] = $this->input->post("id_dokter");
+				$d['id_tunjangan'] = $this->input->post("id_tunjangan");
 				$d['nama_pasien'] = $this->input->post("nama_pasien");
 				$d['tgl_lahir'] = $this->input->post("tgl_lahir");
 				$d['tempat_lahir'] = $this->input->post("tempat_lahir");
@@ -119,6 +124,9 @@ class data_pasien extends CI_Controller {
 				$get_id_kat['id_kategori_ruang'] = $split[1];
 				$get = $this->db->get_where("dlmbg_kategori_ruang",$get_id_kat)->row();
 
+				$get_id_tunjangan['id_tunjangan'] = $d['id_tunjangan'];
+				$get_tunjangan = $this->db->get_where("dlmbg_tunjangan",$get_id_tunjangan)->row();
+
 				$biaya_ruang = $get->biaya_ruang;
 
 				$masuk = new DateTime($d['tgl_masuk']);
@@ -126,7 +134,9 @@ class data_pasien extends CI_Controller {
 				$jarak = $masuk->diff($keluar);
 				$lama = $jarak->format('%a')+1;
 
-				$d['biaya'] = $lama*$biaya_ruang;
+				$potongan = $lama*$biaya_ruang*($get_tunjangan->besaran/100);
+
+				$d['biaya'] = ($lama*$biaya_ruang)-$potongan;
 				
 				$this->db->insert("dlmbg_pasien",$d);
 			}
@@ -135,6 +145,7 @@ class data_pasien extends CI_Controller {
 				$split = explode("-", $this->input->post("id_ruang"));
 				$d['id_ruang'] = $split[0];
 				$d['id_dokter'] = $this->input->post("id_dokter");
+				$d['id_tunjangan'] = $this->input->post("id_tunjangan");
 				$d['nama_pasien'] = $this->input->post("nama_pasien");
 				$d['tgl_lahir'] = $this->input->post("tgl_lahir");
 				$d['tempat_lahir'] = $this->input->post("tempat_lahir");
@@ -148,6 +159,9 @@ class data_pasien extends CI_Controller {
 				$get_id_kat['id_kategori_ruang'] = $split[1];
 				$get = $this->db->get_where("dlmbg_kategori_ruang",$get_id_kat)->row();
 
+				$get_id_tunjangan['id_tunjangan'] = $d['id_tunjangan'];
+				$get_tunjangan = $this->db->get_where("dlmbg_tunjangan",$get_id_tunjangan)->row();
+
 				$biaya_ruang = $get->biaya_ruang;
 
 				$masuk = new DateTime($d['tgl_masuk']);
@@ -155,7 +169,9 @@ class data_pasien extends CI_Controller {
 				$jarak = $masuk->diff($keluar);
 				$lama = $jarak->format('%a')+1;
 
-				$d['biaya'] = $lama*$biaya_ruang;
+				$potongan = $lama*$biaya_ruang*($get_tunjangan->besaran/100);
+
+				$d['biaya'] = ($lama*$biaya_ruang)-$potongan;
 				
 				$this->db->update("dlmbg_pasien",$d,$id);
 			}

@@ -54,6 +54,63 @@ class app_global_admin_model extends CI_Model {
 		return $hasil;
 	}
 	 
+	public function generate_index_kunjungan($cari,$id_tunjangan,$limit,$offset)
+	{
+		$hasil="";
+		$tot_hal = $this->db->query("select a.id_pasien, a.nama_pasien, a.tgl_masuk, b.nama_ruang, c.nama_dokter from dlmbg_pasien a left join dlmbg_ruang b on 
+		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter where 
+		INSTR(CONCAT(' ', a.tgl_masuk,' '), '".$cari."') and id_tunjangan='".$id_tunjangan."'");
+
+		$config['base_url'] = base_url() . 'admin/data_pasien/index/';
+		$config['total_rows'] = $tot_hal->num_rows();
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = 4;
+		$config['first_link'] = 'First';
+		$config['last_link'] = 'Last';
+		$config['next_link'] = 'Next';
+		$config['prev_link'] = 'Prev';
+		$this->pagination->initialize($config);
+
+		$w = $this->db->query("select a.id_pasien, a.nama_pasien, a.tgl_masuk, a.biaya, b.nama_ruang, c.nama_dokter from dlmbg_pasien a left join dlmbg_ruang b on 
+		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter where 
+		INSTR(CONCAT(' ', a.tgl_masuk,' '), '".$cari."') and id_tunjangan='".$id_tunjangan."' LIMIT ".$offset.",".$limit."");
+		
+		$hasil .= "<table class='table table-striped table-condensed'>
+					<thead>
+					<tr>
+					<th>No.</th>
+					<th>Nama Pasien</th>
+					<th>Tgl. Masuk</th>
+					<th>Ruang</th>
+					<th>Dokter</th>
+					<th>Biaya</th>
+					</tr>
+					</thead>";
+		$i = $offset+1;
+		foreach($w->result() as $h)
+		{
+			$hasil .= "<tr>
+					<td>".$i."</td>
+					<td>".$h->nama_pasien."</td>
+					<td>".$h->tgl_masuk."</td>
+					<td>".$h->nama_ruang."</td>
+					<td>".$h->nama_dokter."</td>
+					<td>Rp. ".number_format($h->biaya,2,",",".")."</td>
+					</tr>";
+			$i++;
+		}
+		$tot_biaya = $this->db->query("select sum(biaya) as jum from dlmbg_pasien a where 
+		INSTR(CONCAT(' ', a.tgl_masuk,' '), '".$cari."') and id_tunjangan='".$id_tunjangan."'")->row();
+			$hasil .= "<tr>
+					<td colspan=5>Total : </td>
+					<td>Rp. ".number_format($tot_biaya->jum,2,",",".")."</td>
+					</tr>";
+		$hasil .= '</table>';
+		$hasil .= '<div class="cleaner_h20"></div>';
+		$hasil .= $this->pagination->create_links();
+		return $hasil;
+	}
+	 
 	public function generate_index_sistem($limit,$offset)
 	{
 		$hasil="";
@@ -565,6 +622,51 @@ class app_global_admin_model extends CI_Model {
 			<td><a href='".base_url()."admin/data_kategori_ruang/edit/".$h->id_kategori_ruang."' class='btn btn-inverse btn-small'>
 			<i class='icon-edit'></i> Edit</a>
 			<a href='".base_url()."admin/data_kategori_ruang/hapus/".$h->id_kategori_ruang."' class='btn btn-danger btn-small' onClick=\"return confirm('Are you sure?');\" >
+			<i class='icon-trash'></i> Hapus</a>";
+			
+			$hasil .= "</td></tr>";
+			$i++;
+		}
+		
+		$hasil .= "</table>";
+		$hasil .= $this->pagination->create_links();
+		return $hasil;
+	}
+
+	public function generate_index_tunjangan($limit,$offset)
+	{
+		$i = $offset+1;
+		$tot_hal = $this->db->get("dlmbg_tunjangan");
+
+		$config['base_url'] = base_url() . 'admin/data_tunjangan/index/';
+		$config['total_rows'] = $tot_hal->num_rows();
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = 4;
+		$config['first_link'] = 'First';
+		$config['last_link'] = 'Last';
+		$config['next_link'] = 'Next';
+		$config['prev_link'] = 'Prev';
+		$this->pagination->initialize($config);
+		
+		$w = $this->db->get("dlmbg_tunjangan",$limit,$offset);
+		
+		$hasil = "";
+		$hasil .= "<table class='table table-striped table-condensed'>
+				<thead>
+				<tr>
+				<th width='30'>No.</th>
+				<th>Tunjangan</th>
+				<th>Besar Tunjangan</th>
+				<th width='150'><a href='".base_url()."admin/data_tunjangan/tambah' class='btn btn-success btn-small'><i class='icon-plus-sign'></i> Tambah Data</a></th>
+				</tr>
+				</thead>";
+				
+		foreach($w->result() as $h)
+		{
+			$hasil .= "<tr><td>".$i." </td><td>".$h->tunjangan." </td><td>".$h->besaran." %</td>
+			<td><a href='".base_url()."admin/data_tunjangan/edit/".$h->id_tunjangan."' class='btn btn-inverse btn-small'>
+			<i class='icon-edit'></i> Edit</a>
+			<a href='".base_url()."admin/data_tunjangan/hapus/".$h->id_tunjangan."' class='btn btn-danger btn-small' onClick=\"return confirm('Are you sure?');\" >
 			<i class='icon-trash'></i> Hapus</a>";
 			
 			$hasil .= "</td></tr>";

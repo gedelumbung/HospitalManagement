@@ -25,6 +25,7 @@
 								<li><a href="<?php echo base_url(); ?>admin/data_spesialis"><i class="icon-filter"></i> Data Spesialis</a></li>
 								<li><a href="<?php echo base_url(); ?>admin/data_status"><i class="icon-eject"></i> Data Status</a></li>
 								<li><a href="<?php echo base_url(); ?>admin/data_kategori_ruang"><i class="icon-check"></i> Data Kategori Ruang</a></li>
+								<li><a href="<?php echo base_url(); ?>admin/data_tunjangan"><i class="icon-tag"></i> Data Tunjangan</a></li>
 								<li class="divider"></li>
 								<li><a href="<?php echo base_url(); ?>admin/data_buku_tamu"><i class="icon-comment"></i> Data Buku Tamu</a></li>
 								<li><a href="<?php echo base_url(); ?>admin/data_contact"><i class="icon-envelope"></i> Data Contact Us</a></li>

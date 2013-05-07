@@ -54,6 +54,29 @@
 				</select>
 				<div class="cleaner_h10"></div>
 				
+				<label for="menu">Tunjangan</label>
+				<div class="cleaner_h5"></div>
+				<select name="id_tunjangan">
+					<?php
+						foreach($tunjangan->result_array() as $k)
+						{
+							if($id_tunjangan==$k['id_tunjangan'])
+							{
+					?>
+								<option value="<?php echo $k['id_tunjangan']; ?>" selected="selected"><?php echo $k['tunjangan']; ?></option>
+					<?php
+							}
+							else
+							{
+					?>
+								<option value="<?php echo $k['id_tunjangan']; ?>"><?php echo $k['tunjangan']; ?></option>
+					<?php
+							}
+						}
+					?>
+				</select>
+				<div class="cleaner_h10"></div>
+				
 				<label for="menu">Nama Pasien</label>
 				<div class="cleaner_h5"></div>
 				<input type="search" style="width:90%;" id="nama_pasien" name="nama_pasien" placeholder="Nama Pasien" value="<?php echo $nama_pasien; ?>" />
