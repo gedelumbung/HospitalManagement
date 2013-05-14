@@ -37,4 +37,4 @@
 		});
 	</script>
 </head>
-<body>
+<body onload="peta_awal()">

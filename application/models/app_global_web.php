@@ -203,5 +203,40 @@ class app_global_web extends CI_Model {
 		$hasil .= $this->pagination->create_links();
 		return $hasil;
 	}
+	 
+	 
+	public function generate_index_koordinat()
+	{
+		
+		$hasil="";
+
+		$w = $this->db->get("dlmbg_denah");
+
+		foreach($w->result() as $h)
+		{
+			$koor = explode(",",$h->koordinat);
+			$hasil .= '<div class="point" id="p-'.$koor[0].'-'.$koor[1].'">
+							<h3>'.$h->judul.'</h3>
+							<p>'.$h->keterangan.'</p>
+						</div>';
+		}
+		return $hasil;
+	}
+	 
+	 
+	public function generate_index_list_koordinat()
+	{
+		
+		$hasil="";
+
+		$w = $this->db->get("dlmbg_denah");
+
+		foreach($w->result() as $h)
+		{
+			$koor = explode(",",$h->koordinat);
+			$hasil .= '<li><a href="#" rel="p-'.$koor[0].'-'.$koor[1].'">'.$h->judul.'</a></li>';
+		}
+		return $hasil;
+	}
 
 }

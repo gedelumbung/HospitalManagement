@@ -11,7 +11,8 @@ class data_pasien extends CI_Controller {
    {
 		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
 		{
-			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_pasien($GLOBALS['site_limit_small'],$uri);
+			$d['cari'] = $this->session->userdata("cari");
+			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_pasien($GLOBALS['site_limit_small'],$uri,$d['cari']);
 			
  			$this->load->view("bg_header",$d);
  			$this->load->view("bg_menu");
@@ -196,7 +197,21 @@ class data_pasien extends CI_Controller {
 		{
 			redirect(base_url());
 		}
-   }
+   	}
+ 
+	public function set()
+	{
+		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		{
+			$set['cari'] = $_POST['cari'];
+			$this->session->set_userdata($set);
+			redirect("admin/data_pasien");
+		}
+		else
+		{
+			redirect(base_url());
+		}
+   	}
 }
  
 /* End of file superadmin.php */

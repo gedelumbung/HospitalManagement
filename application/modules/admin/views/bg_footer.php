@@ -9,7 +9,8 @@
 	<script src="<?php echo base_url().'asset/theme/dashboard/'; ?>js/jquery-ui-1.8.21.custom.min.js"></script>
 	<link type="text/css" href="<?php echo base_url().'asset/theme/dashboard'; ?>/css/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
 	<script type="text/javascript">
-		$(function(){
+	jQuery.noConflict();
+	jQuery(document).ready(function(){
 			$('#tgl_lahir').datepicker({ dateFormat: 'dd MM yy' });
 			$('#tgl_masuk').datepicker({ dateFormat: 'dd MM yy' });
 			$('#tgl_keluar').datepicker({ dateFormat: 'dd MM yy' });

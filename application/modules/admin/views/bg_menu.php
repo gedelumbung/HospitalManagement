@@ -19,6 +19,8 @@
 						<li class="divider-vertical"></li>
 						<li><a href="<?php echo base_url(); ?>admin/sistem"><i class="icon-wrench"></i> System</a></li>
 						<li class="divider-vertical"></li>
+						<li><a href="<?php echo base_url(); ?>admin/denah_ruang"><i class="icon-th"></i> Denah Ruang</a></li>
+						<li class="divider-vertical"></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-leaf"></i> Additional <i class=" icon-caret-down"></i></a>
 							<ul class="dropdown-menu">

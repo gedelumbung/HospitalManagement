@@ -26,50 +26,42 @@
 				<div id="footer">
 					<div class="footer-cols">
 						<div class="col">
-							<h2>Services</h2>
+							<h2>Statistik Kunjungan</h2>
+							<?php
+								$data["browser"] = $this->agent->browser().' '.$this->agent->version();
+								$data["os"] = $this->agent->platform();
+								$data["counter_pengunjung"] = $this->db->get("dlmbg_counter")->num_rows();
+								setcookie("pengunjung", "sudah berkunjung", time() + 900 * 24);
+								if (!isset($_COOKIE["pengunjung"])) {
+									$d_in['ip_address'] = $_SERVER['REMOTE_ADDR'];
+									$d_in['tanggal'] = gmdate("d-M-Y H:i:s",time()+3600*9);
+									$this->db->insert("dlmbg_counter",$d_in);
+								}
+							?>
 							<ul>
-								<li><a href="#">Web Design</a></li>
-								<li><a href="#">Branding</a></li>
-								<li><a href="#">Seo Optimization</a></li>
-								<li><a href="#">Mobile App Development</a></li>
+								<li><?php echo $data["counter_pengunjung"]; ?> Kali Kunjungan</li>
 							</ul>
 						</div>
 						<div class="col">
-							<h2>Projects</h2>
+							<h2>Sistem Operasi</h2>
 							<ul>
-								<li><a href="#">Lorem ipsum dolor </a></li>
-								<li><a href="#">Consectetuer adipiscing</a></li>
-								<li><a href="#">Proin sed odio et ante </a></li>
-								<li><a href="#">Mazim sensibus et usu</a></li>
+								<li><?php echo $data["os"]; ?></li>
 							</ul>
 						</div>
 						<div class="col">
-							<h2>Solutions</h2>
+							<h2>Jenis Browser</h2>
 							<ul>
-								<li><a href="#">Lorem ipsum dolor</a></li>
-								<li><a href="#">Consectetuer adipiscing</a></li>
-								<li><a href="#">Proin sed odio et ante </a></li>
-								<li><a href="#">Mazim sensibus et usu</a></li>
+								<li><?php echo $data["browser"]; ?></li>
 							</ul>
 						</div>
-						<div class="col">
-							<h2>Partners</h2>
-							<ul>
-								<li><a href="#">Company Name 1</a></li>
-								<li><a href="#">Company Name 2</a></li>
-								<li><a href="#">Company Name 3</a></li>
-								<li><a href="#">Company Name 4</a></li>
-							</ul>
-						</div>
+
 						<div class="cl">&nbsp;</div>
 					</div>
 					<!-- end of footer-cols -->
 					<div class="footer-bottom">
 						<nav class="footer-nav">
 							<?php echo $menu_atas; ?>
-						</nav>
-						<p class="copy"><?php echo $GLOBALS['site_footer']; ?></p>
-						<div class="cl">&nbsp;</div>
+						</nav>						<div class="cl">&nbsp;</div>
 					</div>
 				</div>
 			</div>

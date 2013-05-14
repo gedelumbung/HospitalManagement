@@ -107,7 +107,7 @@ article, aside, details, footer, header, menu, nav, section { display: block; }
 #footer { background: url(images/footer-cols.png) repeat 0 0; }
 #footer h2 { font-size: 23px; color: #fff; font-family: 'Ubuntu', sans-serif; font-weight: 400; padding-bottom: 18px;  }
 .footer-cols { padding: 46px 24px; background: url(images/footer-lights.png) no-repeat center 0px; }
-.footer-cols .col { float: left; width: 195px; }
+.footer-cols .col { float: left; width: 260px; }
 .footer-cols .col + .col { padding-left: 54px;  }
 .footer-cols .col ul { list-style: none; list-style-position: outside; }
 .footer-cols .col ul li { color: #7dc33a; font-size: 12px;  padding-bottom: 4px; background: url(images/arr-footer-col.png) no-repeat 0 8px; padding-left: 9px;  }
@@ -275,3 +275,184 @@ article, aside, details, footer, header, menu, nav, section { display: block; }
 .cleaner_h40 { clear: both; width:100%; height: 40px; }
 .cleaner_h50 { clear: both; width:100%; height: 50px; }
 .cleaner_h60 { clear: both; width:100%; height: 60px; }
+
+
+
+
+.scroll-pane {
+	width: 180px;
+	height: 100%;
+	overflow: auto;
+	background: #ccc;
+	float: left;
+}
+#pane3 {
+	height: 100%;
+}
+
+.loader {
+background:url(img/loader.gif) no-repeat center #fff;
+}
+
+.imgCaption {
+bottom:0;
+left:0;
+color:#fff;
+opacity:.6;
+background:#333;
+padding:10px;
+width:940px;
+text-align:center;
+font-size:16px;
+text-transform:uppercase;
+text-shadow:1px 1px 0 #111;
+font-weight:bold;
+display:none !important;
+}
+
+.bubble .close {
+display:block;
+text-indent:-9999px;
+position:absolute;
+top:-6px;
+right:-6px;
+width:16px;
+height:16px;
+outline:none;
+background:url(img/close.png) no-repeat;
+cursor:pointer;
+}
+
+.mapNav {
+width:84px;
+height:84px;
+}
+
+.navBtn {
+position:absolute;
+background-repeat:no-repeat;
+width:32px;
+height:32px;
+outline:none;
+text-indent:-9999px;
+display:block;
+z-index:7px;
+}
+
+.navBtn0 {
+top:0;
+left:26px;
+background-image:url(img/navtop.png);
+}
+
+.navBtn1 {
+top:26px;
+right:0;
+background-image:url(img/navright.png);
+}
+
+.navBtn2 {
+bottom:0;
+left:26px;
+background-image:url(img/navbottom.png);
+}
+
+.navBtn3 {
+top:26px;
+left:0;
+background-image:url(img/navleft.png);
+}
+
+/* ------ example1
+-----------------------------------------------*/
+
+
+.bubble {
+padding:7px 10px;
+background:#333;
+color:#fff;
+width:240px;
+font-size:11px;
+/*-- css3 --*/
+-moz-border-radius:10px;
+-webkit-border-radius:10px;
+border-radius:10px;
+-moz-box-shadow:0 0 20px #999;
+-webkit-box-shadow:0 0 20px #999;
+}
+
+.bubble p {
+margin:5px 0;
+}
+
+.bubble span {
+display:block;
+font-size:12px;
+font-weight:bold;
+}
+
+.bubble img {
+vertical-align:bottom;
+}
+
+.map_buttons {
+	position:absolute;
+	top:40px;
+	left:40px;
+	z-index:10;
+}
+
+a {
+color:#000;
+text-decoration:none;
+}
+
+
+
+.europe_map {
+}
+
+.point {
+	display:block;
+	text-indent:-9999px;
+	width:32px;
+	height:44px;
+	width:59px;
+	height:61px;
+	outline:none;
+	background:url(../images/marker.png) no-repeat;
+	cursor:pointer;
+}
+
+ul.map_buttons,
+ul.map_buttons li {
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.bubble a {
+	color:white;
+}
+
+
+        #dock{margin:0px; padding:0px; list-style:none; position:fixed; top:0px; height:100%; 
+              z-index:100; background-color:#f0f0f0; left:0px;}
+        #dock > li {width:40px; height:100%; margin: 0 0 1px 0; background-color:#dcdcdc;
+                      background-image:url(../images/bg-side.png); background-position:left center;}
+        
+        #dock #links {background-image:url(../images/bg-side.png);background-repeat:repeat;}
+
+        
+        /* panels */
+        #dock ul li {padding:5px; border: solid 1px #F1F1F1;}
+        #dock ul li:hover {background:#D3DAED url(item_bkg.png) repeat-x; border: solid 1px #A8D8EB;}
+        #dock ul li.header, #dock ul li .header:hover {background:#D3DAED url(header_bkg.png) repeat-x;border: solid 1px #F1F1F1;}
+      
+        #dock > li:hover ul {display:block;}
+        #dock > li ul {position:absolute; top:0px; left:-180px;  z-index:-1;width:180px; display:none;
+                       background-color:#F1F1F1; border:solid 1px #969696; padding:0px; margin:0px; list-style:none;}
+        #dock > li ul.docked { display:block;z-index:-2;}
+        
+        .dock,.undock{float:right;}
+       .undock {display:none;}

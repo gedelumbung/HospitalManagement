@@ -155,10 +155,11 @@ class app_global_admin_model extends CI_Model {
 		return $hasil;
 	}
 	 
-	public function generate_index_ruang($limit,$offset)
+	public function generate_index_ruang($limit,$offset,$cari)
 	{
 		$hasil="";
-		$tot_hal = $this->db->get("dlmbg_ruang");
+		$search['nama_ruang'] = $cari;
+		$tot_hal = $this->db->like($search)->get("dlmbg_ruang");
 
 		$config['base_url'] = base_url() . 'admin/ruang/index/';
 		$config['total_rows'] = $tot_hal->num_rows();
@@ -171,7 +172,7 @@ class app_global_admin_model extends CI_Model {
 		$this->pagination->initialize($config);
 
 		$w = $this->db->query("select a.nama_ruang, b.kategori_ruang, a.status_ruangan, a.id_ruang from dlmbg_ruang a 
-		left join dlmbg_kategori_ruang b on a.id_kategori_ruang=b.id_kategori_ruang LIMIT ".$offset.",".$limit."");
+		left join dlmbg_kategori_ruang b on a.id_kategori_ruang=b.id_kategori_ruang where nama_ruang like '%".$search['nama_ruang']."%' LIMIT ".$offset.",".$limit."");
 		
 		$hasil .= "<table class='table table-striped table-condensed'>
 					<thead>
@@ -204,10 +205,11 @@ class app_global_admin_model extends CI_Model {
 	}
 
 	 
-	public function generate_index_pasien($limit,$offset)
+	public function generate_index_pasien($limit,$offset,$cari)
 	{
 		$hasil="";
-		$tot_hal = $this->db->get("dlmbg_pasien");
+		$search['nama_pasien'] = $cari;
+		$tot_hal = $this->db->like($search)->get("dlmbg_pasien");
 
 		$config['base_url'] = base_url() . 'admin/data_pasien/index/';
 		$config['total_rows'] = $tot_hal->num_rows();
@@ -220,7 +222,7 @@ class app_global_admin_model extends CI_Model {
 		$this->pagination->initialize($config);
 
 		$w = $this->db->query("select a.id_pasien, a.nama_pasien, a.tgl_masuk, b.nama_ruang, c.nama_dokter from dlmbg_pasien a left join dlmbg_ruang b on 
-		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter LIMIT ".$offset.",".$limit."");
+		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter where nama_pasien like '%".$search['nama_pasien']."%' LIMIT ".$offset.",".$limit."");
 		
 		$hasil .= "<table class='table table-striped table-condensed'>
 					<thead>
@@ -667,6 +669,50 @@ class app_global_admin_model extends CI_Model {
 			<td><a href='".base_url()."admin/data_tunjangan/edit/".$h->id_tunjangan."' class='btn btn-inverse btn-small'>
 			<i class='icon-edit'></i> Edit</a>
 			<a href='".base_url()."admin/data_tunjangan/hapus/".$h->id_tunjangan."' class='btn btn-danger btn-small' onClick=\"return confirm('Are you sure?');\" >
+			<i class='icon-trash'></i> Hapus</a>";
+			
+			$hasil .= "</td></tr>";
+			$i++;
+		}
+		
+		$hasil .= "</table>";
+		$hasil .= $this->pagination->create_links();
+		return $hasil;
+	}
+
+	public function generate_index_denah_ruang($limit,$offset)
+	{
+		$i = $offset+1;
+		$tot_hal = $this->db->get("dlmbg_denah");
+
+		$config['base_url'] = base_url() . 'admin/denah_ruang/index/';
+		$config['total_rows'] = $tot_hal->num_rows();
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = 4;
+		$config['first_link'] = 'First';
+		$config['last_link'] = 'Last';
+		$config['next_link'] = 'Next';
+		$config['prev_link'] = 'Prev';
+		$this->pagination->initialize($config);
+		
+		$w = $this->db->get("dlmbg_denah",$limit,$offset);
+		
+		$hasil = "";
+		$hasil .= "<table class='table table-striped table-condensed'>
+				<thead>
+				<tr>
+				<th width='30'>No.</th>
+				<th>Nama</th>
+				<th width='150'><a href='".base_url()."admin/denah_ruang/tambah' class='btn btn-success btn-small'><i class='icon-plus-sign'></i> Tambah Data</a></th>
+				</tr>
+				</thead>";
+				
+		foreach($w->result() as $h)
+		{
+			$hasil .= "<tr><td>".$i." </td><td>".$h->judul." </td>
+			<td><a href='".base_url()."admin/denah_ruang/edit/".$h->id_denah."' class='btn btn-inverse btn-small'>
+			<i class='icon-edit'></i> Edit</a>
+			<a href='".base_url()."admin/denah_ruang/hapus/".$h->id_denah."' class='btn btn-danger btn-small' onClick=\"return confirm('Are you sure?');\" >
 			<i class='icon-trash'></i> Hapus</a>";
 			
 			$hasil .= "</td></tr>";
