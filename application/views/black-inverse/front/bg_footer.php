@@ -47,15 +47,20 @@
 							<ul>
 								<li><?php echo $data["os"]; ?></li>
 							</ul>
-						</div>
-						<div class="col">
 							<h2>Jenis Browser</h2>
 							<ul>
 								<li><?php echo $data["browser"]; ?></li>
 							</ul>
 						</div>
+						<div class="col">
+						<h2>Kalender</h2>
+						<input type="text" id="example1" style="width:200px;" />
+						<div class="cleaner_h60"></div>
+						</div>
 
 						<div class="cl">&nbsp;</div>
+						<div class="cleaner_h60"></div>
+						<div class="cleaner_h60"></div>
 					</div>
 					<!-- end of footer-cols -->
 					<div class="footer-bottom">

@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session','user_agent','pagination');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('form','url');
+$autoload['helper'] = array('url','name','waktu','form','date','namahari','tgl_indo','captcha','gravatar','download','permalink');
 
 
 /*

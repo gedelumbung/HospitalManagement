@@ -16,8 +16,14 @@
 	<script src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/js/jquery.flexslider-min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/js/functions.js" type="text/javascript"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/css/date/glDatePicker.min.js"></script>
+    <link href="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/css/date/styles/glDatePicker.default.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript">
 	$(document).ready(function() {
+		$('#example1').glDatePicker(
+	{
+		showAlways: true
+	});
 		$("a#boxshow").fancybox({
 						'titleShow'     : true,
 						'height'			: '100%',
@@ -40,6 +46,35 @@
 			<div class="container">
 				<!-- header -->
 				<header id="header">
+					<?php
+							$pesan = "";
+							if(gmdate("H", time()+60*60*7)<03)
+							{
+								$pesan = "malam";
+							}
+							else if(gmdate("H", time()+60*60*7)<10)
+							{
+								$pesan = "pagi";
+							}
+							else if(gmdate("H", time()+60*60*7)<16)
+							{
+								$pesan = "siang";
+							}
+							else if(gmdate("H", time()+60*60*7)<19)
+							{
+								$pesan = "sore";
+							}
+							if(gmdate("H", time()+60*60*7)>18)
+							{
+								$pesan = "malam";
+							}
+							
+						?>
+						<strong>Selamat <?php echo $pesan; ?>...</strong>
+						<?php $tgl = explode("-",gmdate("Y-m-d", time()+60*60*7));
+						echo nama_hari($tgl[2],$tgl[1],$tgl[0])
+
+						.', '.tgl_indo(gmdate("Y-m-d", time()+60*60*7)).' - '.gmdate("H:i:s", time()+60*60*7);  ?> WIB
 					<h1><a href="#">Rumah Sakit Bargawastra Wijaya</a></h1>
 					<h3><a href="#">Rumah Sakit Bargawastra Wijaya</a></h3>
 				</header>
