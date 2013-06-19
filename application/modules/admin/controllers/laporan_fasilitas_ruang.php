@@ -23,6 +23,20 @@ class laporan_fasilitas_ruang extends CI_Controller {
 			redirect(base_url());
 		}
    }
+ 
+   public function cetak()
+   {
+		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		{
+			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_laporan_fasilitas_ruang_cetak();
+			
+ 			$this->load->view("laporan_fasilitas_ruang/bg_cetak",$d);
+		}
+		else
+		{
+			redirect(base_url());
+		}
+   }
 }
  
 /* End of file superadmin.php */

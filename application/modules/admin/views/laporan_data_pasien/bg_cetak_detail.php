@@ -1,13 +1,6 @@
-	<section class="container">
-	
-		<!-- Headings
-			================================================== -->
-		<section class="row-fluid">
-			<h1 class="box-header"><span class="icon-file"></span> Laporan Data Pasien | <?php echo $GLOBALS['site_title']; ?></h1>
-			<div class="box">
-				<div class="well">
-				
-					<a class="btn btn-warning" href="<?php echo base_url(); ?>admin/laporan_data_pasien/cetak_detail/<?php echo $id_cetak; ?>">Cetak Data</a>
+<script type="text/javascript">
+window.print();
+</script>	
 				<label for="menu">Ruangan</label>
 				<div class="cleaner_h5"></div>
 				<select name="id_ruang" disabled>
@@ -112,6 +105,4 @@
 				<input type="search" style="width:90%;" readonly="true" id="biaya" name="biaya" placeholder="Biaya" value="<?php echo "Rp. ".number_format($biaya,2,",","."); ?>" />
 				<div class="cleaner_h10"></div>
 
-				</div>
-			</div>
-		</section>
+				

@@ -29,6 +29,7 @@
 					?>
 					</select>
 					<input type="submit" value="Lihat Laporan" class="btn btn-small" />
+					<a class="btn btn-warning btn-small" href="<?php echo base_url(); ?>admin/laporan_data_kunjungan/cetak">Cetak Data</a>
 					<?php echo form_close(); ?>
 					<?php echo $data_retrieve; ?>
 				</div>

@@ -28,6 +28,25 @@ class laporan_data_kunjungan extends CI_Controller {
 			redirect(base_url());
 		}
    }
+ 
+   public function cetak()
+   {
+		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		{
+			$cari = $this->session->userdata("bulan_cari");
+			$kat = $this->session->userdata("tunjangan_cari");
+			$d['bulan_cari'] = $cari;
+			$d['id_tunjangan'] = $kat;
+			$d['tunjangan'] = $this->db->get("dlmbg_tunjangan");
+			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_kunjungan_cetak($cari,$kat);
+			
+ 			$this->load->view("laporan_data_kunjungan/bg_cetak",$d);
+		}
+		else
+		{
+			redirect(base_url());
+		}
+   }
 
    public function set()
    {
