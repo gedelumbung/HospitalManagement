@@ -1010,8 +1010,28 @@ class app_global_admin_model extends CI_Model {
 	 
 	public function generate_index_laporan_pasien($limit,$offset)
 	{
+		$param = "";
+		$kriteria = $this->session->userdata("kriteria_laporan");
+		if($kriteria=="anak")
+		{
+			$param = "where a.usia >= 6 and a.usia <= 11";
+		}
+		else if($kriteria=="remaja")
+		{
+			$param = "where a.usia >= 12 and a.usia <= 17";
+		}
+		else if($kriteria=="dewasa")
+		{
+			$param = "where a.usia >= 18 and a.usia <= 35";
+		}
+		else if($kriteria=="tua")
+		{
+			$param = "where a.usia >= 36";
+		}
+
 		$hasil="";
-		$tot_hal = $this->db->get("dlmbg_pasien");
+		$tot_hal = $this->db->query("select a.id_pasien, a.usia, a.nama_pasien, a.tgl_masuk, b.nama_ruang, c.nama_dokter from dlmbg_pasien a left join dlmbg_ruang b on 
+		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter ".$param."");
 
 		$config['base_url'] = base_url() . 'admin/laporan_data_pasien/index/';
 		$config['total_rows'] = $tot_hal->num_rows();
@@ -1023,14 +1043,15 @@ class app_global_admin_model extends CI_Model {
 		$config['prev_link'] = 'Prev';
 		$this->pagination->initialize($config);
 
-		$w = $this->db->query("select a.id_pasien, a.nama_pasien, a.tgl_masuk, b.nama_ruang, c.nama_dokter from dlmbg_pasien a left join dlmbg_ruang b on 
-		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter LIMIT ".$offset.",".$limit."");
+		$w = $this->db->query("select a.id_pasien, a.usia, a.nama_pasien, a.tgl_masuk, b.nama_ruang, c.nama_dokter from dlmbg_pasien a left join dlmbg_ruang b on 
+		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter ".$param." LIMIT ".$offset.",".$limit."");
 		
 		$hasil .= "<table class='table table-striped table-condensed'>
 					<thead>
 					<tr>
 					<th>No.</th>
 					<th>Nama Pasien</th>
+					<th>Umur</th>
 					<th>Tgl. Masuk</th>
 					<th>Ruang</th>
 					<th>Dokter</th>
@@ -1042,6 +1063,7 @@ class app_global_admin_model extends CI_Model {
 			$hasil .= "<tr>
 					<td>".$i."</td>
 					<td>".$h->nama_pasien."</td>
+					<td>".$h->usia."</td>
 					<td>".$h->tgl_masuk."</td>
 					<td>".$h->nama_ruang."</td>
 					<td>".$h->nama_dokter."</td>
@@ -1059,11 +1081,30 @@ class app_global_admin_model extends CI_Model {
 	 
 	public function generate_index_laporan_pasien_cetak()
 	{
+		$param = "";
+		$kriteria = $this->session->userdata("kriteria_laporan");
+		if($kriteria=="anak")
+		{
+			$param = "where a.usia >= 6 and a.usia <= 11";
+		}
+		else if($kriteria=="remaja")
+		{
+			$param = "where a.usia >= 12 and a.usia <= 17";
+		}
+		else if($kriteria=="dewasa")
+		{
+			$param = "where a.usia >= 18 and a.usia <= 35";
+		}
+		else if($kriteria=="tua")
+		{
+			$param = "where a.usia >= 36";
+		}
+
 		$hasil="";
-		$w = $this->db->query("select a.id_pasien, a.nama_pasien, a.tgl_masuk, b.nama_ruang, c.nama_dokter from dlmbg_pasien a left join dlmbg_ruang b on 
-		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter");
+		$w = $this->db->query("select a.id_pasien, a.usia, a.nama_pasien, a.tgl_masuk, b.nama_ruang, c.nama_dokter from dlmbg_pasien a left join dlmbg_ruang b on 
+		a.id_ruang=b.id_ruang left join dlmbg_dokter c on a.id_dokter=c.id_dokter ".$param."");
 		
-		$hasil .= "<table cellspacing='0' cellpadding='10' border='1'>
+		$hasil .= "<table cellspacing='0' cellpadding='10' border='1' width='100%'>
 					<thead>
 					<tr>
 					<th>No.</th>

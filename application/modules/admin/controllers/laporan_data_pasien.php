@@ -110,6 +110,20 @@ class laporan_data_pasien extends CI_Controller {
 			redirect(base_url());
 		}
    }
+ 
+   public function cari()
+   {
+		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		{
+			$cari['kriteria_laporan'] = $_POST['cari'];
+			$this->session->set_userdata($cari);
+			redirect("admin/laporan_data_pasien");
+		}
+		else
+		{
+			redirect(base_url());
+		}
+   }
 }
  
 /* End of file superadmin.php */
