@@ -10,6 +10,7 @@
 				
 				<label for="menu">Ruangan</label>
 				<div class="cleaner_h5"></div>
+				<input type="hidden" name="id_ruang_temp" value="<?php echo $id_ruang; ?>">
 				<select name="id_ruang">
 					<?php
 						foreach($ruang->result_array() as $k)
@@ -17,13 +18,13 @@
 							if($id_ruang==$k['id_ruang'])
 							{
 					?>
-								<option value="<?php echo $k['id_ruang']; ?>" selected="selected"><?php echo $k['nama_ruang']; ?></option>
+								<option value="<?php echo $k['id_ruang'].'-'.$k['id_kategori_ruang']; ?>" selected="selected"><?php echo $k['nama_ruang']; ?></option>
 					<?php
 							}
 							else
 							{
 					?>
-								<option value="<?php echo $k['id_ruang']; ?>"><?php echo $k['nama_ruang']; ?></option>
+								<option value="<?php echo $k['id_ruang'].'-'.$k['id_kategori_ruang']; ?>"><?php echo $k['nama_ruang']; ?></option>
 					<?php
 							}
 						}
@@ -47,6 +48,29 @@
 							{
 					?>
 								<option value="<?php echo $k['id_dokter']; ?>"><?php echo $k['nama_dokter']; ?></option>
+					<?php
+							}
+						}
+					?>
+				</select>
+				<div class="cleaner_h10"></div>
+				
+				<label for="menu">Tunjangan</label>
+				<div class="cleaner_h5"></div>
+				<select name="id_tunjangan">
+					<?php
+						foreach($tunjangan->result_array() as $k)
+						{
+							if($id_tunjangan==$k['id_tunjangan'])
+							{
+					?>
+								<option value="<?php echo $k['id_tunjangan']; ?>" selected="selected"><?php echo $k['tunjangan']; ?></option>
+					<?php
+							}
+							else
+							{
+					?>
+								<option value="<?php echo $k['id_tunjangan']; ?>"><?php echo $k['tunjangan']; ?></option>
 					<?php
 							}
 						}
@@ -107,9 +131,14 @@
 				<input type="search" style="width:90%;" id="tgl_keluar" name="tgl_keluar" placeholder="Tanggal Keluar" value="<?php echo $tgl_keluar; ?>" />
 				<div class="cleaner_h10"></div>
 				
+				<label for="menu">Biaya Kerusakan</label>
+				<div class="cleaner_h5"></div>
+				<input type="search" style="width:90%;" id="biaya_kerusakan" name="biaya_kerusakan" placeholder="Biaya Kerusakan" value="<?php echo $biaya_kerusakan; ?>" />
+				<div class="cleaner_h10"></div>
+				
 				<label for="menu">Biaya</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="biaya" name="biaya" placeholder="Biaya" value="<?php echo $biaya; ?>" />
+				<input type="search" style="width:90%;" readonly="true" id="biaya" name="biaya" placeholder="Biaya" value="<?php echo "Rp. ".number_format($biaya,2,",","."); ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<input type="hidden" name="id_param" value="<?php echo $id_param; ?>" />

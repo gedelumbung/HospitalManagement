@@ -10,6 +10,7 @@
 				
 				<label for="menu">Ruangan</label>
 				<div class="cleaner_h5"></div>
+				<input type="hidden" name="id_ruang_temp" value="<?php echo $id_ruang; ?>">
 				<select name="id_ruang">
 					<?php
 						foreach($ruang->result_array() as $k)
@@ -128,6 +129,11 @@
 				<label for="menu">Tanggal Keluar</label>
 				<div class="cleaner_h5"></div>
 				<input type="search" style="width:90%;" id="tgl_keluar" name="tgl_keluar" placeholder="Tanggal Keluar" value="<?php echo $tgl_keluar; ?>" />
+				<div class="cleaner_h10"></div>
+				
+				<label for="menu">Biaya Kerusakan</label>
+				<div class="cleaner_h5"></div>
+				<input type="search" style="width:90%;" id="biaya_kerusakan" name="biaya_kerusakan" placeholder="Biaya Kerusakan" value="<?php echo $biaya_kerusakan; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Biaya</label>

@@ -42,9 +42,10 @@ class data_pasien extends CI_Controller {
 			$d['tgl_masuk'] = "";
 			$d['tgl_keluar'] = "";
 			$d['biaya'] = "0";
+			$d['biaya_kerusakan'] = "0";
 			
 			$d['dokter'] = $this->db->get("dlmbg_dokter");
-			$d['ruang'] = $this->db->get("dlmbg_ruang");
+			$d['ruang'] = $this->db->get_where("dlmbg_ruang",array("status_ruangan"=>"Kosong"));
 			$d['tunjangan'] = $this->db->get("dlmbg_tunjangan");
 			
 			$d['id_param'] = "";
@@ -81,6 +82,7 @@ class data_pasien extends CI_Controller {
 			$d['tgl_masuk'] = $get->tgl_masuk;
 			$d['tgl_keluar'] = $get->tgl_keluar;
 			$d['biaya'] = $get->biaya;
+			$d['biaya_kerusakan'] = $get->biaya_kerusakan;
 			
 			$d['dokter'] = $this->db->get("dlmbg_dokter");
 			$d['ruang'] = $this->db->get("dlmbg_ruang");
@@ -104,6 +106,7 @@ class data_pasien extends CI_Controller {
    {
 		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
 		{
+			$this->load->helper("umur");
 			$tipe = $this->input->post("tipe");
 			$id['id_pasien'] = $this->input->post("id_param");
 			if($tipe=="tambah")
@@ -116,11 +119,12 @@ class data_pasien extends CI_Controller {
 				$d['tgl_lahir'] = $this->input->post("tgl_lahir");
 				$d['tempat_lahir'] = $this->input->post("tempat_lahir");
 				$d['jk'] = $this->input->post("jk");
-				$d['usia'] = $this->input->post("usia");
+				$d['usia'] = umur($this->input->post("tgl_lahir"));
 				$d['alamat'] = $this->input->post("alamat");
 				$d['jenis_penyakit'] = $this->input->post("jenis_penyakit");
 				$d['tgl_masuk'] = $this->input->post("tgl_masuk");
 				$d['tgl_keluar'] = $this->input->post("tgl_keluar");
+				$d['biaya_kerusakan'] = $this->input->post("biaya_kerusakan");
 
 				$get_id_kat['id_kategori_ruang'] = $split[1];
 				$get = $this->db->get_where("dlmbg_kategori_ruang",$get_id_kat)->row();
@@ -137,12 +141,15 @@ class data_pasien extends CI_Controller {
 
 				$potongan = $lama*$biaya_ruang*($get_tunjangan->besaran/100);
 
-				$d['biaya'] = ($lama*$biaya_ruang)-$potongan;
+				$d['biaya'] = ($lama*$biaya_ruang)-$potongan+$d['biaya_kerusakan'];
 				
 				$this->db->insert("dlmbg_pasien",$d);
 			}
 			else if($tipe=="edit")
 			{
+				$id_p['id_ruang'] = $this->input->post("id_ruang_temp");
+				$this->db->update("dlmbg_ruang",array("status_ruangan"=>"Kosong"),$id_p);
+
 				$split = explode("-", $this->input->post("id_ruang"));
 				$d['id_ruang'] = $split[0];
 				$d['id_dokter'] = $this->input->post("id_dokter");
@@ -151,11 +158,12 @@ class data_pasien extends CI_Controller {
 				$d['tgl_lahir'] = $this->input->post("tgl_lahir");
 				$d['tempat_lahir'] = $this->input->post("tempat_lahir");
 				$d['jk'] = $this->input->post("jk");
-				$d['usia'] = $this->input->post("usia");
+				$d['usia'] = umur($this->input->post("tgl_lahir"));
 				$d['alamat'] = $this->input->post("alamat");
 				$d['jenis_penyakit'] = $this->input->post("jenis_penyakit");
 				$d['tgl_masuk'] = $this->input->post("tgl_masuk");
 				$d['tgl_keluar'] = $this->input->post("tgl_keluar");
+				$d['biaya_kerusakan'] = $this->input->post("biaya_kerusakan");
 
 				$get_id_kat['id_kategori_ruang'] = $split[1];
 				$get = $this->db->get_where("dlmbg_kategori_ruang",$get_id_kat)->row();
@@ -172,9 +180,12 @@ class data_pasien extends CI_Controller {
 
 				$potongan = $lama*$biaya_ruang*($get_tunjangan->besaran/100);
 
-				$d['biaya'] = ($lama*$biaya_ruang)-$potongan;
+				$d['biaya'] = ($lama*$biaya_ruang)-$potongan+$d['biaya_kerusakan'];
 				
 				$this->db->update("dlmbg_pasien",$d,$id);
+				
+				$id_ur['id_ruang'] = $d['id_ruang'];
+				$this->db->update("dlmbg_ruang",array("status_ruangan"=>"Terisi"),$id_ur);
 			}
 			
 			redirect("admin/data_pasien");
