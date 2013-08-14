@@ -15,7 +15,7 @@
 				
 				<label for="menu">Status Ruangan</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="status_ruangan" name="status_ruangan" placeholder="Status Ruangan" value="<?php echo $status_ruangan; ?>" />
+				<input type="search" style="width:90%;" id="status_ruangan" name="status_ruangan" readonly placeholder="Status Ruangan" value="<?php echo $status_ruangan; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Fasilitas Ruangan</label>

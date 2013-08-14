@@ -215,7 +215,7 @@ class app_global_admin_model extends CI_Model {
 		$config['prev_link'] = 'Prev';
 		$this->pagination->initialize($config);
 
-		$w = $this->db->query("select a.nama_ruang, b.kategori_ruang, a.status_ruangan, a.id_ruang from dlmbg_ruang a 
+		$w = $this->db->query("select a.nama_ruang, b.kategori_ruang, a.status_ruangan, a.id_ruang, (select count(id_ruang) as jum_kosong from dlmbg_ruang where id_kategori_ruang=a.id_kategori_ruang and status_ruangan='Kosong') as jum_kosong, (select count(id_ruang) as jum_kosong from dlmbg_ruang where id_kategori_ruang=a.id_kategori_ruang and status_ruangan='Terisi') as jum_terisi from dlmbg_ruang a 
 		left join dlmbg_kategori_ruang b on a.id_kategori_ruang=b.id_kategori_ruang where nama_ruang like '%".$search['nama_ruang']."%' LIMIT ".$offset.",".$limit."");
 		
 		$hasil .= "<table class='table table-striped table-condensed'>
@@ -225,17 +225,25 @@ class app_global_admin_model extends CI_Model {
 					<th>Nama Ruang</th>
 					<th>Kategori Ruang</th>
 					<th>Status Ruangan</th>
+					<th>Status Kategori Ruang</th>
+					<th>Ruangan Kosong </th>
+					<th>Ruangan Terisi</th>
 					<th width='150'><a href='".base_url()."admin/ruang/tambah' class='btn btn-success btn-small'><i class='icon-plus-sign'></i> Tambah Data</a></th>
 					</tr>
 					</thead>";
 		$i = $offset+1;
 		foreach($w->result() as $h)
 		{
+			$st_kon = "Tersedia";
+			if($h->jum_kosong==0){$st_kon="Full";}
 			$hasil .= "<tr>
 					<td>".$i."</td>
 					<td>".$h->nama_ruang."</td>
 					<td>".$h->kategori_ruang."</td>
 					<td>".$h->status_ruangan."</td>
+					<td>".$st_kon."</td>
+					<td>".$h->jum_kosong."</td>
+					<td>".$h->jum_terisi."</td>
 					<td>";
 			$hasil .= "<a href='".base_url()."admin/ruang/edit/".$h->id_ruang."' class='btn btn-small btn-inverse'><i class='icon-edit'></i> Edit</a> ";
 			$hasil .= "<a href='".base_url()."admin/ruang/hapus/".$h->id_ruang."' onClick=\"return confirm('Are you sure?');\" class='btn btn-small btn-danger'><i class='icon-trash'></i> Hapus</a></td>
@@ -649,7 +657,7 @@ class app_global_admin_model extends CI_Model {
 		$config['prev_link'] = 'Prev';
 		$this->pagination->initialize($config);
 		
-		$w = $this->db->get("dlmbg_kategori_ruang",$limit,$offset);
+		$w = $this->db->query("select x.kategori_ruang, x.id_kategori_ruang, x.biaya_ruang, (select count(id_ruang) as jum_kosong from dlmbg_ruang where id_kategori_ruang=x.id_kategori_ruang and status_ruangan='Kosong') as jum_kosong, (select count(id_ruang) as jum_kosong from dlmbg_ruang where id_kategori_ruang=x.id_kategori_ruang and status_ruangan='Terisi') as jum_terisi from dlmbg_kategori_ruang x limit ".$offset.",".$limit." ");
 		
 		$hasil = "";
 		$hasil .= "<table class='table table-striped table-condensed'>
@@ -658,6 +666,8 @@ class app_global_admin_model extends CI_Model {
 				<th width='30'>No.</th>
 				<th>Kategori Ruang</th>
 				<th>Biaya Ruang</th>
+				<th>Ruangan Kosong</th>
+				<th>Ruangan Terisi</th>
 				<th width='150'><a href='".base_url()."admin/data_kategori_ruang/tambah' class='btn btn-success btn-small'><i class='icon-plus-sign'></i> Tambah Data</a></th>
 				</tr>
 				</thead>";
@@ -665,6 +675,7 @@ class app_global_admin_model extends CI_Model {
 		foreach($w->result() as $h)
 		{
 			$hasil .= "<tr><td>".$i." </td><td>".$h->kategori_ruang." </td><td>Rp. ".number_format($h->biaya_ruang,2,',','.')." </td>
+			<td>".$h->jum_kosong." </td><td>".$h->jum_terisi." </td>
 			<td><a href='".base_url()."admin/data_kategori_ruang/edit/".$h->id_kategori_ruang."' class='btn btn-inverse btn-small'>
 			<i class='icon-edit'></i> Edit</a>
 			<a href='".base_url()."admin/data_kategori_ruang/hapus/".$h->id_kategori_ruang."' class='btn btn-danger btn-small' onClick=\"return confirm('Are you sure?');\" >
