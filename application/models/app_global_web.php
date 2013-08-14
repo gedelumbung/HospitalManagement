@@ -174,27 +174,34 @@ class app_global_web extends CI_Model {
 		$config['prev_link'] = 'Prev';
 		$this->pagination->initialize($config);
 
-		$w = $this->db->query("select a.nama_ruang, a.fasilitas_ruangan, b.kategori_ruang, a.status_ruangan, a.id_ruang from dlmbg_ruang a 
+		$w = $this->db->query("select a.nama_ruang, b.kategori_ruang, a.status_ruangan, a.id_ruang, (select count(id_ruang) as jum_kosong from dlmbg_ruang where id_kategori_ruang=a.id_kategori_ruang and status_ruangan='Kosong') as jum_kosong, (select count(id_ruang) as jum_kosong from dlmbg_ruang where id_kategori_ruang=a.id_kategori_ruang and status_ruangan='Terisi') as jum_terisi from dlmbg_ruang a 
 		left join dlmbg_kategori_ruang b on a.id_kategori_ruang=b.id_kategori_ruang LIMIT ".$offset.",".$limit."");
 		
 		$hasil .= "<table class='table table-striped table-condensed' border=1 cellspacing='0'>
 					<thead>
 					<tr>
-					<th width='30'>No.</th>
-					<th width='150'>Nama Ruang</th>
-					<th width='150'>Kategori Ruang</th>
-					<th width='150'>Status Ruangan</th>
-					<th width='420'>Fasilitas Ruangan</th>
+					<th>No.</th>
+					<th>Nama Ruang</th>
+					<th>Kategori Ruang</th>
+					<th>Status Ruangan</th>
+					<th>Status Kategori Ruang</th>
+					<th>Ruangan Kosong </th>
+					<th>Ruangan Terisi</th>
+					</tr>
 					</thead>";
 		$i = $offset+1;
 		foreach($w->result() as $h)
 		{
+			$st_kon = "Tersedia";
+			if($h->jum_kosong==0){$st_kon="Full";}
 			$hasil .= "<tr>
 					<td>".$i."</td>
 					<td>".$h->nama_ruang."</td>
 					<td>".$h->kategori_ruang."</td>
 					<td>".$h->status_ruangan."</td>
-					<td>".$h->fasilitas_ruangan."</td>
+					<td>".$st_kon."</td>
+					<td>".$h->jum_kosong."</td>
+					<td>".$h->jum_terisi."</td>
 					</tr>";
 			$i++;
 		}
