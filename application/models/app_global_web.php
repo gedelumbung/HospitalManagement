@@ -22,6 +22,36 @@ class app_global_web extends CI_Model {
 		$hasil .= '</ul>';
 		return $hasil;
 	}
+
+	public function generate_index_kategori_ruang($limit,$offset)
+	{
+		$i = 1;
+		
+		$w = $this->db->query("select x.kategori_ruang, x.id_kategori_ruang, x.biaya_ruang, (select count(id_ruang) as jum_kosong from dlmbg_ruang where id_kategori_ruang=x.id_kategori_ruang and status_ruangan='Kosong') as jum_kosong, (select count(id_ruang) as jum_kosong from dlmbg_ruang where id_kategori_ruang=x.id_kategori_ruang and status_ruangan='Terisi') as jum_terisi from dlmbg_kategori_ruang x limit ".$offset.",".$limit." ");
+		
+		$hasil = "";
+		$hasil .= "<table class='table table-striped table-condensed' border=1 cellspacing='0'>
+				<thead>
+				<tr>
+				<th width='30'>No.</th>
+				<th>Kategori Ruang</th>
+				<th>Biaya Ruang</th>
+				<th>Ruangan Kosong</th>
+				<th>Ruangan Terisi</th>
+				</tr>
+				</thead>";
+				
+		foreach($w->result() as $h)
+		{
+			$hasil .= "<tr><td>".$i." </td><td>".$h->kategori_ruang." </td><td>Rp. ".number_format($h->biaya_ruang,2,',','.')." </td>
+			<td>".$h->jum_kosong." </td><td>".$h->jum_terisi." </td></tr>";
+			$i++;
+		}
+		
+		$hasil .= "</table>";
+		$hasil .= $this->pagination->create_links();
+		return $hasil;
+	}
 	 
 	 
 	public function generate_index_galeri($limit,$offset)
